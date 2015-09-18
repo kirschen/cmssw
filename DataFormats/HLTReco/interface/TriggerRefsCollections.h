@@ -29,6 +29,7 @@
 #include "DataFormats/Candidate/interface/CompositeCandidateFwd.h"
 #include "DataFormats/METReco/interface/METFwd.h"
 #include "DataFormats/METReco/interface/CaloMETFwd.h"
+#include "DataFormats/METReco/interface/PFMETFwd.h"
 #include "DataFormats/HcalIsolatedTrack/interface/IsolatedPixelTrackCandidateFwd.h"
 
 #include "DataFormats/L1Trigger/interface/L1HFRingsFwd.h"
@@ -55,6 +56,7 @@ namespace trigger
   typedef std::vector<reco::CompositeCandidateRef>          VRcomposite;
   typedef std::vector<reco::METRef>                         VRbasemet;
   typedef std::vector<reco::CaloMETRef>                     VRcalomet;
+  typedef std::vector<reco::PFMETRef>                       VRpfmet;
   typedef std::vector<reco::IsolatedPixelTrackCandidateRef> VRpixtrack;
 
   typedef std::vector<l1extra::L1EmParticleRef>             VRl1em;
@@ -85,6 +87,8 @@ namespace trigger
     VRbasemet   basemetRefs_;
     Vids        calometIds_;
     VRcalomet   calometRefs_;
+    Vids        pfmetIds_;
+    VRpfmet     pfmetRefs_;
     Vids        pixtrackIds_;
     VRpixtrack  pixtrackRefs_;
 
@@ -115,6 +119,7 @@ namespace trigger
       compositeIds_(), compositeRefs_(),
       basemetIds_(), basemetRefs_(),
       calometIds_(), calometRefs_(),
+      pfmetIds_(), pfmetRefs_(),
       pixtrackIds_(), pixtrackRefs_(),
 
       l1emIds_(), l1emRefs_(),
@@ -143,6 +148,8 @@ namespace trigger
       std::swap(basemetRefs_,   other.basemetRefs_);
       std::swap(calometIds_,    other.calometIds_);
       std::swap(calometRefs_,   other.calometRefs_);
+      std::swap(pfmetIds_,    other.pfmetIds_);
+      std::swap(pfmetRefs_,   other.pfmetRefs_);
       std::swap(pixtrackIds_,   other.pixtrackIds_);
       std::swap(pixtrackRefs_,  other.pixtrackRefs_);
 
@@ -191,6 +198,10 @@ namespace trigger
     void addObject(int id, const reco::CaloMETRef& ref) {
       calometIds_.push_back(id);
       calometRefs_.push_back(ref);
+    }
+    void addObject(int id, const reco::PFMETRef& ref) {
+      pfmetIds_.push_back(id);
+      pfmetRefs_.push_back(ref);
     }
     void addObject(int id, const reco::IsolatedPixelTrackCandidateRef& ref) {
       pixtrackIds_.push_back(id);
@@ -269,6 +280,12 @@ namespace trigger
       calometIds_.insert(calometIds_.end(),ids.begin(),ids.end());
       calometRefs_.insert(calometRefs_.end(),refs.begin(),refs.end());
       return calometIds_.size();
+    }
+    size_type addObjects (const Vids& ids, const VRpfmet& refs) {
+      assert(ids.size()==refs.size());
+      pfmetIds_.insert(pfmetIds_.end(),ids.begin(),ids.end());
+      pfmetRefs_.insert(pfmetRefs_.end(),refs.begin(),refs.end());
+      return pfmetIds_.size();
     }
     size_type addObjects (const Vids& ids, const VRpixtrack& refs) {
       assert(ids.size()==refs.size());
@@ -542,6 +559,38 @@ namespace trigger
       size_type j(0);
       for (size_type i=begin; i!=end; ++i) {
 	if (id==calometIds_[i]) {refs[j]=calometRefs_[i]; ++j;}
+      }
+      return;
+    }
+
+    void getObjects(Vids& ids, VRpfmet& refs) const {
+      getObjects(ids,refs,0,pfmetIds_.size());
+    }
+    void getObjects(Vids& ids, VRpfmet& refs, size_type begin, size_type end) const {
+      assert (begin<=end);
+      assert (end<=pfmetIds_.size());
+      const size_type n(end-begin);
+      ids.resize(n);
+      refs.resize(n);
+      size_type j(0);
+      for (size_type i=begin; i!=end; ++i) {
+	ids[j]=pfmetIds_[i];
+	refs[j]=pfmetRefs_[i];
+	++j;
+      }
+    }
+    void getObjects(int id, VRpfmet& refs) const {
+      getObjects(id,refs,0,pfmetIds_.size());
+    } 
+    void getObjects(int id, VRpfmet& refs, size_type begin, size_type end) const {
+      assert (begin<=end);
+      assert (end<=pfmetIds_.size());
+      size_type n(0);
+      for (size_type i=begin; i!=end; ++i) {if (id==pfmetIds_[i]) {++n;}}
+      refs.resize(n);
+      size_type j(0);
+      for (size_type i=begin; i!=end; ++i) {
+	if (id==pfmetIds_[i]) {refs[j]=pfmetRefs_[i]; ++j;}
       }
       return;
     }
@@ -830,6 +879,10 @@ namespace trigger
     size_type          calometSize()   const {return calometIds_.size();}
     const Vids&        calometIds()    const {return calometIds_;}
     const VRcalomet&   calometRefs()   const {return calometRefs_;}
+
+    size_type          pfmetSize()     const {return pfmetIds_.size();}
+    const Vids&        pfmetIds()      const {return pfmetIds_;}
+    const VRpfmet&     pfmetRefs()     const {return pfmetRefs_;}
 
     size_type          pixtrackSize()  const {return pixtrackIds_.size();}
     const Vids&        pixtrackIds()   const {return pixtrackIds_;}
