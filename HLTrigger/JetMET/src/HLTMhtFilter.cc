@@ -27,7 +27,8 @@ HLTMhtFilter::HLTMhtFilter(const edm::ParameterSet & iConfig) : HLTFilter(iConfi
     }
 
     for(unsigned int i=0; i<nOrs_; ++i) {
-        m_theMhtToken.push_back(consumes<reco::METCollection>(mhtLabels_[i]));
+        m_theMhtToken.push_back(consumes<edm::View<reco::MET> >(mhtLabels_[i]));
+        //        m_theMhtToken.push_back(consumes<reco::METCollection>(mhtLabels_[i]));
     }
 
 }
@@ -59,7 +60,8 @@ bool HLTMhtFilter::hltFilter(edm::Event & iEvent, const edm::EventSetup & iSetup
       // Create the reference to the output filter objects
       if (saveTags())  filterproduct.addCollectionTag(mhtLabels_[i]);
 
-      edm::Handle<reco::METCollection> hmht;
+      //      edm::Handle<reco::METCollection> hmht;
+      edm::Handle<edm::View<reco::MET> > hmht;
       iEvent.getByToken(m_theMhtToken[i], hmht);
       double mht = 0;
       if (hmht->size() > 0)  mht = hmht->front().pt();
@@ -71,8 +73,9 @@ bool HLTMhtFilter::hltFilter(edm::Event & iEvent, const edm::EventSetup & iSetup
       // in term of timing this will not matter much; typically 1 or 2 cut-sets
       // will be checked only
       
+
       // Store the ref (even if it is not accepted)
-      mhtref = reco::METRef(hmht, 0);
+      mhtref = reco::METRef(hmht->refAt(0), 0);
       
       filterproduct.addObject(trigger::TriggerMHT, mhtref);  // save as TriggerMHT object
     }

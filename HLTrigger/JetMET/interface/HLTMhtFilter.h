@@ -39,7 +39,8 @@ class HLTMhtFilter : public HLTFilter {
 
     unsigned int nOrs_;  /// number of pairs of MHT
 
-    std::vector<edm::EDGetTokenT<reco::METCollection> > m_theMhtToken;
+    //    std::vector<edm::EDGetTokenT<reco::METCollection> > m_theMhtToken;
+    std::vector<edm::EDGetTokenT<edm::View<reco::MET> > > m_theMhtToken;
 };
 
 #endif  // HLTMhtFilter_h_
