@@ -23,7 +23,14 @@ RecoBTagFEVT = cms.PSet(
         'keep *_inclusiveCandidateSecondaryVerticesCvsL_*_*',
         'keep *_pfInclusiveSecondaryVertexFinderCvsLTagInfos_*_*',
         'keep *_pfCombinedCvsLJetTags_*_*',
-        'keep *_pfCombinedCvsBJetTags_*_*'
+        'keep *_pfCombinedCvsBJetTags_*_*',
+        # DeepFlavour
+        'keep *_pfDeepCSVJetTags_*_*',
+        # DeepCMVA
+        'keep *_pfDeepCMVAJetTags_*_*',
+        # DeepFlavour (new)
+        'keep *_pfDeepFlavourTagInfos_*_*',
+        'keep *_pfDeepFlavourJetTags_*_*',
     )
 )
 #RECO content
@@ -49,7 +56,14 @@ RecoBTagRECO = cms.PSet(
         'keep *_inclusiveCandidateSecondaryVerticesCvsL_*_*',
         'keep *_pfInclusiveSecondaryVertexFinderCvsLTagInfos_*_*',
         'keep *_pfCombinedCvsLJetTags_*_*',
-        'keep *_pfCombinedCvsBJetTags_*_*'
+        'keep *_pfCombinedCvsBJetTags_*_*',
+        # DeepFlavour
+        'keep *_pfDeepCSVJetTags_*_*',
+        # DeepCMVA
+        'keep *_pfDeepCMVAJetTags_*_*',
+        # DeepFlavour (new)
+        'keep *_pfDeepFlavourTagInfos_*_*',
+        'keep *_pfDeepFlavourJetTags_*_*',
     )
 )
 #AOD content
@@ -69,6 +83,12 @@ RecoBTagAOD = cms.PSet(
         # CTagging
         'keep *_inclusiveCandidateSecondaryVerticesCvsL_*_*',
         'keep *_pfCombinedCvsLJetTags_*_*',
-        'keep *_pfCombinedCvsBJetTags_*_*'
+        'keep *_pfCombinedCvsBJetTags_*_*',
+        # DeepFlavour
+        'keep *_pfDeepCSVJetTags_*_*',
+        # DeepCMVA
+        'keep *_pfDeepCMVAJetTags_*_*',
+        # DeepFlavour (new)
+        'keep *_pfDeepFlavourJetTags_*_*',
     )
 )

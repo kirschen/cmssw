@@ -108,6 +108,7 @@ def miniAOD_customizeCommon(process):
     runMetCorAndUncForMiniAODProduction(process,
                                         pfCandColl=cms.InputTag("noHFCands"),
                                         recoMetFromPFCs=True, #needed for HF removal
+                                        reclusterJets=True,
                                         jetSelection="pt>15 && abs(eta)<3.",
                                         postfix="NoHF"
                                         )
@@ -127,12 +128,26 @@ def miniAOD_customizeCommon(process):
     del process.slimmedMETsNoHF.caloMET
     # ================== NoHF pfMET
 
+
+    # -- Add DeepCSV on miniAOD only --
+    process.load('RecoBTag.Combined.deepFlavour_cff')
+    process.patJets.discriminatorSources.extend([
+        cms.InputTag('pfDeepCSVJetTags:probudsg'), 
+        cms.InputTag('pfDeepCSVJetTags:probbb'), 
+        cms.InputTag('pfDeepCSVJetTags:probc'), 
+        cms.InputTag('pfDeepCSVJetTags:probb'),
+        cms.InputTag('pfDeepCSVJetTags:probcc')
+        ])
+
+
     #keep this after all addJetCollections otherwise it will attempt computing them also for stuf with no taginfos
     #Some useful BTAG vars
     if not hasattr( process, 'pfImpactParameterTagInfos' ):
         process.load('RecoBTag.ImpactParameter.pfImpactParameterTagInfos_cfi')
     if not hasattr( process, 'pfSecondaryVertexTagInfos' ):
         process.load('RecoBTag.SecondaryVertex.pfSecondaryVertexTagInfos_cfi')
+    if not hasattr( process, 'pfInclusiveSecondaryVertexFinderTagInfos' ):
+        process.load('RecoBTag.SecondaryVertex.pfInclusiveSecondaryVertexFinderTagInfos_cfi')
     process.patJets.userData.userFunctions = cms.vstring(
     '?(tagInfoCandSecondaryVertex("pfSecondaryVertex").nVertices()>0)?(tagInfoCandSecondaryVertex("pfSecondaryVertex").secondaryVertex(0).p4.M):(0)',
     '?(tagInfoCandSecondaryVertex("pfSecondaryVertex").nVertices()>0)?(tagInfoCandSecondaryVertex("pfSecondaryVertex").secondaryVertex(0).numberOfSourceCandidatePtrs):(0)',
@@ -252,9 +267,11 @@ def miniAOD_customizeCommon(process):
         exp = cms.double(1.0)
     )
 
+    noDeepFlavourDiscriminators = [x.value() for x in process.patJets.discriminatorSources if not "DeepFlavour" in x.value()]
     addJetCollection(process, postfix   = "", labelName = 'Puppi', jetSource = cms.InputTag('ak4PFJetsPuppi'),
                     jetCorrections = ('AK4PFPuppi', ['L2Relative', 'L3Absolute'], ''),
-                    algo= 'AK', rParam = 0.4, btagDiscriminators = map(lambda x: x.value() ,process.patJets.discriminatorSources)
+                    pfCandidates = cms.InputTag('puppi'), # using Puppi candidates as input for b tagging of Puppi jets
+                    algo= 'AK', rParam = 0.4, btagDiscriminators = noDeepFlavourDiscriminators
                     )
     
     process.patJetGenJetMatchPuppi.matched = 'slimmedGenJets'
@@ -334,6 +351,7 @@ def miniAOD_customizeOutput(out):
 def miniAOD_customizeData(process):
     from PhysicsTools.PatAlgos.tools.coreTools import runOnData
     runOnData( process, outputModules = [] )
+    process.load("RecoCTPPS.TotemRPLocal.ctppsLocalTrackLiteProducer_cfi")
 
 def miniAOD_customizeAllData(process):
     miniAOD_customizeCommon(process)

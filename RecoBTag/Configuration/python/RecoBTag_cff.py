@@ -6,6 +6,8 @@ from RecoBTag.ImpactParameter.impactParameter_cff import *
 from RecoBTag.SecondaryVertex.secondaryVertex_cff import *
 from RecoBTag.Combined.combinedMVA_cff import *
 from RecoBTag.CTagging.RecoCTagging_cff import *
+from RecoBTag.Combined.deepFlavour_cff import *
+from RecoBTag.DeepFlavour.DeepFlavour_cff import *
 from RecoVertex.AdaptiveVertexFinder.inclusiveVertexing_cff import *
 
 legacyBTagging = cms.Sequence(
@@ -57,7 +59,6 @@ pfBTagging = cms.Sequence(
         pfInclusiveSecondaryVertexFinderTagInfos *
         pfSimpleInclusiveSecondaryVertexHighEffBJetTags *
         pfCombinedInclusiveSecondaryVertexV2BJetTags
-
       ) +
 
       # soft lepton tag infos and algos
@@ -69,10 +70,11 @@ pfBTagging = cms.Sequence(
 
     # overall combined taggers
     ( #CSV + soft-lepton + jet probability discriminators combined
-      pfCombinedMVAV2BJetTags
-
-    )
+      pfCombinedMVAV2BJetTags *
+      pfDeepFlavourTaskNew
+      )
 )
+
 
 btagging = cms.Sequence(
     pfBTagging * pfCTagging

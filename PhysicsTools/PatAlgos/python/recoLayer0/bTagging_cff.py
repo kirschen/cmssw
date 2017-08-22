@@ -27,8 +27,17 @@ supportedBtagInfos = [
     # C-Tagging tag infos
   , 'pfInclusiveSecondaryVertexFinderCvsLTagInfos'
   , 'pfInclusiveSecondaryVertexFinderNegativeCvsLTagInfos'
+    # DeepFlavour	
+  , 'pfDeepCSVTagInfos'
+  , 'pfDeepCSVNegativeTagInfos'
+  , 'pfDeepCSVPositiveTagInfos'
+    # DeepCMVA	
+  , 'pfDeepCMVATagInfos'
+  , 'pfDeepCMVANegativeTagInfos'
+  , 'pfDeepCMVAPositiveTagInfos'
     # TopTagInfos (unrelated to b tagging)
   , 'caTopTagInfos'
+  , 'pfDeepTagInfos'
   ]
 # extend for "internal use" in PAT/MINIAOD (renaming)
 supportedBtagInfos.append( 'caTopTagInfosPAT' )
@@ -126,6 +135,45 @@ supportedBtagDiscr = {
   , 'pfCombinedCvsBJetTags'                                 : [["pfImpactParameterTagInfos", "pfInclusiveSecondaryVertexFinderCvsLTagInfos", "softPFMuonsTagInfos", "softPFElectronsTagInfos"]]
   , 'pfNegativeCombinedCvsBJetTags'                         : [["pfImpactParameterTagInfos", "pfInclusiveSecondaryVertexFinderNegativeCvsLTagInfos", "softPFMuonsTagInfos", "softPFElectronsTagInfos"]]
   , 'pfPositiveCombinedCvsBJetTags'                         : [["pfImpactParameterTagInfos", "pfInclusiveSecondaryVertexFinderCvsLTagInfos", "softPFMuonsTagInfos", "softPFElectronsTagInfos"]]
+    # DeepFlavour
+  , 'pfDeepCSVJetTags:probudsg'                           : [['pfDeepCSVTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepCSVJetTags:probb'                              : [['pfDeepCSVTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepCSVJetTags:probc'                              : [['pfDeepCSVTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepCSVJetTags:probbb'                             : [['pfDeepCSVTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepCSVJetTags:probcc'                             : [['pfDeepCSVTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfNegativeDeepCSVJetTags:probudsg'                   : [['pfDeepCSVNegativeTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderNegativeTagInfos']]
+  , 'pfNegativeDeepCSVJetTags:probb'                      : [['pfDeepCSVNegativeTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderNegativeTagInfos']]
+  , 'pfNegativeDeepCSVJetTags:probc'                      : [['pfDeepCSVNegativeTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderNegativeTagInfos']]
+  , 'pfNegativeDeepCSVJetTags:probbb'                     : [['pfDeepCSVNegativeTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderNegativeTagInfos']]
+  , 'pfNegativeDeepCSVJetTags:probcc'                     : [['pfDeepCSVNegativeTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderNegativeTagInfos']]
+  , 'pfPositiveDeepCSVJetTags:probudsg'                   : [['pfDeepCSVPositiveTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfPositiveDeepCSVJetTags:probb'                      : [['pfDeepCSVPositiveTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfPositiveDeepCSVJetTags:probc'                      : [['pfDeepCSVPositiveTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfPositiveDeepCSVJetTags:probbb'                     : [['pfDeepCSVPositiveTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfPositiveDeepCSVJetTags:probcc'                     : [['pfDeepCSVPositiveTagInfos'], ["pfImpactParameterTagInfos", 'pfInclusiveSecondaryVertexFinderTagInfos']]
+    # DeepCMVA
+  , 'pfDeepCMVAJetTags:probudsg'                           : [["pfDeepCMVATagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfDeepCMVAJetTags:probb'                              : [["pfDeepCMVATagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfDeepCMVAJetTags:probc'                              : [["pfDeepCMVATagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfDeepCMVAJetTags:probbb'                             : [["pfDeepCMVATagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfDeepCMVAJetTags:probcc'                             : [["pfDeepCMVATagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfNegativeDeepCMVAJetTags:probudsg'                   : [["pfDeepCMVANegativeTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderNegativeTagInfos"]]
+  , 'pfNegativeDeepCMVAJetTags:probb'                      : [["pfDeepCMVANegativeTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderNegativeTagInfos"]]
+  , 'pfNegativeDeepCMVAJetTags:probc'                      : [["pfDeepCMVANegativeTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderNegativeTagInfos"]]
+  , 'pfNegativeDeepCMVAJetTags:probbb'                     : [["pfDeepCMVANegativeTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderNegativeTagInfos"]]
+  , 'pfNegativeDeepCMVAJetTags:probcc'                     : [["pfDeepCMVANegativeTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderNegativeTagInfos"]]
+  , 'pfPositiveDeepCMVAJetTags:probudsg'                   : [["pfDeepCMVAPositiveTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfPositiveDeepCMVAJetTags:probb'                      : [["pfDeepCMVAPositiveTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfPositiveDeepCMVAJetTags:probc'                      : [["pfDeepCMVAPositiveTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfPositiveDeepCMVAJetTags:probbb'                     : [["pfDeepCMVAPositiveTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]
+  , 'pfPositiveDeepCMVAJetTags:probcc'                     : [["pfDeepCMVAPositiveTagInfos"], ["pfImpactParameterTagInfos","softPFMuonsTagInfos","softPFElectronsTagInfos","pfInclusiveSecondaryVertexFinderTagInfos"]]    
     # ChargeTagging
-  , 'pfChargeBJetTags'                                      : [["pfImpactParameterTagInfos", "pfInclusiveSecondaryVertexFinderTagInfos", "softPFMuonsTagInfos", "softPFElectronsTagInfos"]]
-  }
+  , 'pfChargeBJetTags'                                     : [["pfImpactParameterTagInfos", "pfInclusiveSecondaryVertexFinderTagInfos", "softPFMuonsTagInfos", "softPFElectronsTagInfos"]]
+  , 'pfDeepFlavourJetTags:probb'                           : [["pfDeepFlavourTagInfos"], ['pfDeepCSVTagInfos','pfImpactParameterTagInfos', 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepFlavourJetTags:probbb'                          : [["pfDeepFlavourTagInfos"], ['pfDeepCSVTagInfos','pfImpactParameterTagInfos', 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepFlavourJetTags:problepb'                        : [["pfDeepFlavourTagInfos"], ['pfDeepCSVTagInfos','pfImpactParameterTagInfos', 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepFlavourJetTags:probc'                           : [["pfDeepFlavourTagInfos"], ['pfDeepCSVTagInfos','pfImpactParameterTagInfos', 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepFlavourJetTags:probuds'                         : [["pfDeepFlavourTagInfos"], ['pfDeepCSVTagInfos','pfImpactParameterTagInfos', 'pfInclusiveSecondaryVertexFinderTagInfos']]
+  , 'pfDeepFlavourJetTags:probg'                           : [["pfDeepFlavourTagInfos"], ['pfDeepCSVTagInfos','pfImpactParameterTagInfos', 'pfInclusiveSecondaryVertexFinderTagInfos']]
+}
+
