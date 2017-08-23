@@ -73,7 +73,10 @@ def import_tf():\n\
 \n\
 def start_session():\n\
     global sess\n\
-    sess = tf.Session()\n\
+    session_conf = tf.ConfigProto(\n\
+        intra_op_parallelism_threads=1,\n\
+        inter_op_parallelism_threads=1)\n\
+    sess = tf.Session(config=session_conf)\n\
 \n\
 def load_graph(path):\n\
     global saver\n\
